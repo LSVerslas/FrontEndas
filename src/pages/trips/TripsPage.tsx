@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { beBaseUrl } from '../../config';
 import { TripObjType } from '../../types/types';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import TripCard from '../../components/trips/TripCard';
 
@@ -51,16 +51,6 @@ export default function TripsPage() {
               {tripsArr?.map((tObj) => (
                 <li className='' key={tObj.id}>
                   <TripCard item={tObj} />
-                  {/* <img src={'/img/' + tObj.image_main} alt={tObj.name} className='img-fluid' />
-                  <h3>{tObj.name}</h3>
-                  <p className='lead'>{tObj.date}</p>
-                  <p>
-                    <span className='fw-bold'>{tObj.country}</span> - {tObj.city}
-                  </p>
-                  <p className=''>{tObj.price} eur</p>
-                  <Link to={'/'}>
-                    <button className='btn btn-info'>Read more</button>
-                  </Link> */}
                 </li>
               ))}
             </ul>
