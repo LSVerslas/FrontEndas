@@ -5,12 +5,23 @@ import { useEffect, useState } from 'react';
 import { beBaseUrl } from '../../config';
 import { TripObjType } from '../../types/types';
 import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import TripCard from '../../components/trips/TripCard';
 
 export default function TripsPage() {
   const [tripsArr, setTripsArr] = useState<TripObjType[] | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setISError] = useState<string>('');
   console.log('tripsArr ===', tripsArr);
+
   useEffect(() => {
-    getPosts(`${beBaseUrl}/trips`).then((data) => setTripsArr(data));
+    setIsLoading(true);
+    // toast.loading('Loading...');
+    getPosts(`${beBaseUrl}/trips`).then((data) => {
+      setTripsArr(data);
+      // toast.dismiss();
+      setIsLoading(false);
+    });
   }, []);
 
   function getPosts(url: string): Promise<TripObjType[] | null> {
@@ -23,7 +34,9 @@ export default function TripsPage() {
     })
     .catch ((error: Error) => {
       console.log('error ===', error);
-      return null;
+      toast.error('Failed to fetch trips');
+      setISError('Kakas neivyko, bandykite veliau');    
+      return null; 
     });
   }
 
@@ -32,10 +45,13 @@ export default function TripsPage() {
         <div className='container'>
             <h1 className='display-2'>TripsPage</h1>
             <p>Welcome to our TripsPage</p>
-            <ul className='list-group'>
+            {isLoading && <p className='alert alert-secondary mb-0'>Loading.....</p>}
+            {isError && <p className='alert alert-danger mb-0 text-center'>{isError}</p>}
+            <ul className='unlisted '>
               {tripsArr?.map((tObj) => (
-                <li className='list-group-item' key={tObj.id}>
-                  <img src={'/img/' + tObj.image_main} alt={tObj.name} className='img-fluid' />
+                <li className='' key={tObj.id}>
+                  <TripCard item={tObj} />
+                  {/* <img src={'/img/' + tObj.image_main} alt={tObj.name} className='img-fluid' />
                   <h3>{tObj.name}</h3>
                   <p className='lead'>{tObj.date}</p>
                   <p>
@@ -44,7 +60,7 @@ export default function TripsPage() {
                   <p className=''>{tObj.price} eur</p>
                   <Link to={'/'}>
                     <button className='btn btn-info'>Read more</button>
-                  </Link>
+                  </Link> */}
                 </li>
               ))}
             </ul>
