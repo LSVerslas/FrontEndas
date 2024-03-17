@@ -33,6 +33,10 @@ export default function SingleTripsPage() {
     //
   }
 
+
+
+
+
   return (
     <div>
         <div className='container'>
@@ -44,7 +48,7 @@ export default function SingleTripsPage() {
             />
           </div>
           <div className='right'>
-            <h1 className='display-2'>Trip {currentTrip?.name}</h1>
+            <h1 className='display-2'>{currentTrip?.name}</h1>
             <p className='lead'>{getNiceDate(currentTrip?.date || '')}</p>
             <p>
               <span className='fw-bold'>{currentTrip?.country}</span> - {currentTrip?.city}
