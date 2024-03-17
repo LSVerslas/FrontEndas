@@ -7,6 +7,7 @@ import TripsPage from './pages/trips/TripsPage';
 import SingleTripsPage from './pages/trips/SingleTripsPage';
 import CountriesPage from './pages/countries/CountriesPage';
 import { Toaster } from 'react-hot-toast';
+import AddTripPage from './pages/trips/AddTripPage';
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/trips" element={<TripsPage />} />
+        <Route path="/trips/add" element={<AddTripPage />} />
         <Route path="/trips/:tripId" element={<SingleTripsPage />} />
         <Route path="/countries" element={<CountriesPage />} />
       </Routes> 
