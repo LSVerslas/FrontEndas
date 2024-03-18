@@ -1,26 +1,49 @@
+/* Header */
 
-.navLink:hover {
-    background: #7b7b7b;
-}
-.navLink.active {
+.navLink {
+    background: #212529;
+    /* background: var(--bg-dark); */
+  }
+  .navLink:hover {
+    background: #747474;
+  }
+  .navLink.active {
     text-decoration: underline;
     text-underline-offset: 5px;
-}
-
-.mobileMenu.on {
+  }
+  
+  .mobileMenu.on {
     transform: translateX(0);
-}
-
-
-@media screen and (max-width: 768px) {
+  }
+  
+  .submenu {
+    position: absolute;
+    top: calc(100%);
+    transform: translateY(-200%);
+    left: 0;
+    min-width: 150px;
+    /* bottom: 0; */
+    transition: transform 0.15s ease-in-out;
+  }
+  .hasChildren:hover .submenu {
+    transform: translateY(0);
+  }
+  
+  /* bootrstrap md media */
+  @media screen and (max-width: 768px) {
     .mobileMenu {
-    position: fixed;
-    background: tomato;
-    right: 0;
-    top: 50px;
-    bottom: 0;
-    min-width: 200px;
-    transition: transform 0.2s ease-in;
-    transform: translateX(100%);
-}
-}
+      position: fixed;
+      background: tomato;
+      right: 0;
+      top: 50px;
+      bottom: 0;
+      min-width: 200px;
+      transition: transform 0.2s ease-in;
+      transform: translateX(100%);
+    }
+  
+    .submenu {
+      position: static;
+      transform: translateY(0);
+    }
+  }
