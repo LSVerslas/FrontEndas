@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { beBaseUrl } from '../../config';
 import { TripObjType } from '../../types/types';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import TripCard from '../../components/trips/TripCard';
 
