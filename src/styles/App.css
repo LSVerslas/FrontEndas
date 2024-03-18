@@ -22,13 +22,30 @@
     transform: translateY(-200%);
     left: 0;
     min-width: 150px;
+    z-index: -1;
     /* bottom: 0; */
-    transition: transform 0.15s ease-in-out;
+    transition: transform 0.5s ease-in-out;
   }
   .hasChildren:hover .submenu {
     transform: translateY(0);
+    z-index: 0;
   }
   
+  .addFromGrid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(2, 1fr);
+      }
+  .gridSpan2 {
+    grid-column: span 2;
+  }
+
+
+
+
+
+
+
   /* bootrstrap md media */
   @media screen and (max-width: 768px) {
     .mobileMenu {
