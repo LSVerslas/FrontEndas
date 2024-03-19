@@ -8,7 +8,7 @@ import { TripObjType } from '../../types/types';
 import toast from 'react-hot-toast';
 import TripCard from '../../components/trips/TripCard';
 import FilterBox from '../../components/UI/FilterBox';
-import { Link, useSearchParams } from 'react-router-dom';
+import Rating from '../../components/UI/Rating';
 
 export default function TripsPage() {
   const [tripsArr, setTripsArr] = useState<TripObjType[] | null>(null);
@@ -16,18 +16,19 @@ export default function TripsPage() {
   const [isError, setIsError] = useState<string>('');
   console.log('tripsArr ===', tripsArr);
 
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  console.log('searchParams ===', searchParams.get('country'));
-  const filterCountryVal = searchParams.get('country');
+  const [filterVal, setFilterVal] = useState('');
+  // '/filter?country=france'
+  // '/filter?city=paris'
+  // '/filter?rating=3'
+  // '/filter?country=france&city=paris'&rating=3'
   useEffect(() => {
     // toast.loading('Loading...');
-    if (filterCountryVal) {
-      getPosts(`${beBaseUrl}/trips/filter?country=${filterCountryVal}`);
+    if (filterVal) {
+      getPosts(`${beBaseUrl}/trips/${filterVal}`);
     } else {
       getPosts(`${beBaseUrl}/trips`);
     }
-  }, [filterCountryVal]);
+  }, [filterVal]);
 
   function getPosts(url: string) {
     setIsLoading(true);
@@ -49,35 +50,45 @@ export default function TripsPage() {
       });
   }
 
-  // function filterBy(countryVal: string) {
-  //   // parsiusti atfiltruotus duomenis
-  //   getPosts(`${beBaseUrl}/trips/filter?country=${countryVal}`);
-  // }
-
   return (
     <div>
       <div className='container'>
         <h1 className='display-2'>TripsPage</h1>
         <p>Welcome to our TripsPage</p>
-        <Link to={'/trips?country=france'} className='btn btn-outline-dark'>
-          filter by country = france
-        </Link>
-        <Link to={'/trips?country=United Kingdom'} className='btn btn-outline-dark'>
-          filter by country = UK
-        </Link>
-        <Link to={'/trips?country=jamaika'} className='btn btn-outline-dark'>
-          filter by country = JM
-        </Link>
-        {/* <button onClick={() => filterBy('france')} className='btn btn-outline-dark'>
-          filter by country = france
-        </button> */}
-        {/* <button onClick={() => filterBy('United Kingdom')} className='btn btn-outline-dark'>
-          filter by country = United Kingdom
-        </button> */}
+
+        <button onClick={() => setFilterVal('')} className='btn btn-outline-dark'>
+          All
+        </button>
+        <button
+          onClick={() => setFilterVal('/filter?country=lithuania')}
+          className='btn btn-outline-dark'>
+          Lithuania
+        </button>
+        <button
+          onClick={() => setFilterVal('/filter?country=jamaika')}
+          className='btn btn-outline-dark'>
+          Jamaika
+        </button>
+        <button
+          onClick={() => setFilterVal('/filter?country=france')}
+          className='btn btn-outline-dark'>
+          France
+        </button>
+        <button
+          onClick={() => setFilterVal('/filter?country=italy')}
+          className='btn btn-outline-dark'>
+          Italy
+        </button>
+        <button
+          onClick={() => setFilterVal('/filter?country=United Kingdom')}
+          className='btn btn-outline-dark'>
+          UK
+        </button>
+
         {isLoading && <p className='alert alert-secondary mb-0'>Loading....</p>}
         {isError && <p className='alert alert-danger mb-0 text-center'>{isError}</p>}
         <div className='tripsPageGrid'>
-          <TripsFilters />
+          <TripsFilters onFilterChange={setFilterVal} />
 
           <ul className='unlisted '>
             {tripsArr?.map((tObj) => (
@@ -92,13 +103,53 @@ export default function TripsPage() {
   );
 }
 
-export function TripsFilters() {
+type TripsFiltersProps = {
+  onFilterChange: React.Dispatch<React.SetStateAction<string>>;
+};
+
+export function TripsFilters({ onFilterChange }: TripsFiltersProps) {
+  const [countySelVal, setCountySelVal] = useState('all');
+  console.log('countySelVal ===', countySelVal);
+  function countryChangeHandler(e: React.ChangeEvent<HTMLSelectElement>) {
+    setCountySelVal(e.target.value);
+    if (e.target.value === 'all') {
+      return onFilterChange('');
+    }
+    onFilterChange(`/filter?country=${e.target.value}`);
+    // setFilterVal('/filter?country=france')
+  }
+
   return (
     <div>
-      <FilterBox title='Filter by date'>
-        <div>pagal ta</div>
-        <div>pagal ana</div>
-        <div>pagal sali</div>
+      <FilterBox title='Filter by Country'>
+        <select
+          value={countySelVal}
+          onChange={countryChangeHandler}
+          className='form-select'
+          aria-label='Filter by Country'>
+          <option value={'all'}>Filter by Country</option>
+          <option value='lithuania'>Lithuania</option>
+          <option value='france'>France</option>
+          <option value='united kingdom'>UK</option>
+          <option value='italy'>Italy</option>
+          <option value='jamaika'>Jamaika</option>
+        </select>
+      </FilterBox>
+      <FilterBox title='Filter by City'>
+        <select
+          value={countySelVal}
+          onChange={countryChangeHandler}
+          className='form-select'
+          aria-label='Filter by Country'>
+          <option value={'all'}>Filter by Country</option>
+          <option value='france'>France</option>
+          <option value='united kingdom'>UK</option>
+          <option value='italy'>Italy</option>
+          <option value='jamaika'>Jamaika</option>
+        </select>
+      </FilterBox>
+      <FilterBox title='Filter by Rating'>
+        <Rating rating={5} />
       </FilterBox>
     </div>
   );

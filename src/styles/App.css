@@ -1,66 +1,82 @@
 /* Header */
 
 .navLink {
-    background: #212529;
-    /* background: var(--bg-dark); */
+  background: #212529;
+  /* background: var(--bg-dark); */
+}
+.navLink:hover {
+  background: #747474;
+}
+.navLink.active {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+.mobileMenu.on {
+  transform: translateX(0);
+}
+
+.submenu {
+  position: absolute;
+  top: calc(100%);
+  transform: translateY(-200%);
+  left: 0;
+  min-width: 150px;
+  z-index: -1;
+  /* bottom: 0; */
+  transition: transform 0.2s ease-in-out;
+}
+.hasChildren:hover .submenu {
+  transform: translateY(0);
+  z-index: 0;
+}
+
+.hasChildren > a {
+  z-index: 1;
+  /* background: #212529; */
+}
+
+/* Add trip form */
+.addFromGrid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, 1fr);
+}
+.gridSpan2 {
+  grid-column: span 2;
+}
+
+/* Trips Page */
+
+.tripsPageGrid {
+  display: grid;
+  grid-template-columns: 295px auto;
+  gap: 30px;
+}
+
+/* Trip Card */
+
+.tripGrid {
+  display: grid;
+  grid-template-columns: 315px auto;
+  gap: 24px;
+}
+
+/* bootrstrap md media */
+@media screen and (max-width: 768px) {
+  .mobileMenu {
+    position: fixed;
+    background: tomato;
+    right: 0;
+    top: 50px;
+    bottom: 0;
+    min-width: 200px;
+    transition: transform 0.2s ease-in;
+    transform: translateX(100%);
   }
-  .navLink:hover {
-    background: #747474;
-  }
-  .navLink.active {
-    text-decoration: underline;
-    text-underline-offset: 5px;
-  }
-  
-  .mobileMenu.on {
-    transform: translateX(0);
-  }
-  
+
   .submenu {
-    position: absolute;
-    top: calc(100%);
-    transform: translateY(-200%);
-    left: 0;
-    min-width: 150px;
-    z-index: -1;
-    /* bottom: 0; */
-    transition: transform 0.5s ease-in-out;
-  }
-  .hasChildren:hover .submenu {
+    position: static;
     transform: translateY(0);
-    z-index: 0;
   }
-  
-  .addFromGrid {
-    display: grid;
-    gap: 16px;
-    grid-template-columns: repeat(2, 1fr);
-      }
-  .gridSpan2 {
-    grid-column: span 2;
-  }
-
-
-
-
-
-
-
-  /* bootrstrap md media */
-  @media screen and (max-width: 768px) {
-    .mobileMenu {
-      position: fixed;
-      background: tomato;
-      right: 0;
-      top: 50px;
-      bottom: 0;
-      min-width: 200px;
-      transition: transform 0.2s ease-in;
-      transform: translateX(100%);
-    }
-  
-    .submenu {
-      position: static;
-      transform: translateY(0);
-    }
-  }
+}
