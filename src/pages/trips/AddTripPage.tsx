@@ -1,6 +1,6 @@
 import { FormikProps, useFormik } from 'formik';
 import { TripObjTypeNoId } from '../../types/types';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { beBaseUrl } from '../../config';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
@@ -22,21 +22,6 @@ const initFormValues: TripObjTypeNoId = {
   images_3: '',
 };
 
-
-const tripValidatationSchema = Yup.object({
-  name: Yup.string().min(3).max(255).required(),
-  country: Yup.string().min(3).max(255).required(),
-  city: Yup.string().min(3).max(255).required(),
-  description: Yup.string().min(10).required(),
-  rating: Yup.number().min(0).max(5).required(),
-  price: Yup.number().min(0).required(),
-  image_main: Yup.string().min(3).max(255).required(),
-  images_1: Yup.string().min(3).max(255),
-  images_2: Yup.string().min(3).max(255),
-  images_3: Yup.string().min(3).max(255),
-});
-
-
 export default function AddTripPage() {
   // add formik
   const formik = useFormik<TripObjTypeNoId>({
@@ -55,12 +40,17 @@ export default function AddTripPage() {
       images_3: Yup.string().min(3).max(255),
     }),
     onSubmit: (values) => {
-      console.log('values ===', JSON.stringify(values, null, 2));
-      sendDataToBe(values);
+      // console.log('values ===', JSON.stringify(values, null, 2));
+      // nesiusti images_*
+      const finalObj = { ...values };
+      if (values.images_1?.trim() === '') delete finalObj.images_1;
+      if (values.images_2?.trim() === '') delete finalObj.images_2;
+      if (values.images_3?.trim() === '') delete finalObj.images_3;
+      sendDataToBe(finalObj);
     },
   });
 
-  formik.setErrors();
+  // formik.setErrors();
 
   const navigate = useNavigate();
 
@@ -80,17 +70,21 @@ export default function AddTripPage() {
         }
       })
       .catch((error) => {
-        console.warn('sendDataToBe ivyko klaida:', error);
+        const axiosErr = error as AxiosError;
+        console.warn('sendDataToBe ivyko klaida:');
+        console.log(JSON.stringify(axiosErr.response?.data, null, 2));
         toast.error('Somening went wrong');
         // jei nesekme tai rodom klaidas arba klaida
+        if (axiosErr.response?.data) {
+          formik.setErrors(axiosErr.response.data);
+        }
       });
   }
 
   // type FormikType = typeof formik
   // initial values formik
 
-  console.log('formik klaidos ===', formik.errors);
-  console.log('formik  ===', formik.values);
+  // console.log('formik klaidos ===', formik.errors);
 
   // sukurti likusius  InputEl
   return (
