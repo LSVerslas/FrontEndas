@@ -30,16 +30,16 @@ export default function Header() {
         <Link to={'/'}>
           <h2 className='mb-0 py-1'>Logo</h2>
         </Link>
-        <nav 
-        onClick={closeMenu}
-        className={`${isMenuOpen ? 'on ' : ''} mobileMenu d-md-block bg-dark `}>
+        <nav
+          onClick={closeMenu}
+          className={`${isMenuOpen ? 'on ' : ''} mobileMenu d-md-block bg-dark `}>
           <ul className='unlisted d-flex flex-column flex-md-row  align-md-items-center'>
             <li>
               <NavItem to='/'>Home</NavItem>
             </li>
             <li className='hasChildren position-relative'>
               <NavItem to='/trips'>Trips</NavItem>
-              <ul className='submenu ps-3 ps-md-0 unlisted bg-dark rounded-bottom-2 overflow-hidden'>
+              <ul className='submenu ps-3 ps-md-0 unlisted bg-dark  rounded-bottom-2 overflow-hidden'>
                 <li>
                   <NavItem subItem to='/trips/add'>
                     Add Trip
@@ -55,6 +55,15 @@ export default function Header() {
 
             <li>
               <NavItem to='/countries'>Countries</NavItem>
+            </li>
+            {/* <li>
+              <NavItem to='/auth'>Auth</NavItem>
+            </li> */}
+            <li>
+              <NavItem to='/auth/register'>Register</NavItem>
+            </li>
+            <li>
+              <NavItem to='/auth/login'>Login</NavItem>
             </li>
           </ul>
         </nav>
