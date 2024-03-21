@@ -4,7 +4,7 @@ import Header from './components/layout/Header';
 import { Route, Routes } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import TripsPage from './pages/trips/TripsPage';
-import SingleTripPage from './pages/trips/SingleTripPage';
+import SingleTripPage from './pages/trips/SingleTripsPage';
 import { Toaster } from 'react-hot-toast';
 import AddTripPage from './pages/trips/AddTripPage';
 import AuthPage from './pages/AuthPage';
