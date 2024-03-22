@@ -7,7 +7,7 @@ import { beBaseUrl } from '../../config';
 import axios from 'axios';
 import { getNiceDate } from '../../utils/helpers';
 import toast from 'react-hot-toast';
-import SwiperTest from '../../components/UI/SwiperTest';
+// import SwiperTest from '../../components/UI/SwiperTest';
 import SinglePageSwiper from '../../components/UI/SinglePageSwiper';
 
 type tripParam = {

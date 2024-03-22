@@ -7,8 +7,8 @@ import { TripObjType } from '../../types/types';
 
 import toast from 'react-hot-toast';
 import TripCard from '../../components/trips/TripCard';
-import FilterBox from '../../components/UI/FilterBox';
-import Rating from '../../components/UI/Rating';
+// import FilterBox from '../../components/UI/FilterBox';
+// import Rating from '../../components/UI/Rating';
 import { TripsFilters } from '../../components/trips/TripsFilters';
 
 export default function TripsPage() {

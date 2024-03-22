@@ -22,7 +22,7 @@ export function TripsFilters({ onFilterChange }: TripsFiltersProps) {
     if (starsSelected !== 0) finalFilterString += `&rating=${starsSelected}`;
     console.log('finalFilterString ===', finalFilterString);
     onFilterChange(finalFilterString);
-  }, [countySelVal, citySelValue, starsSelected]);
+  }, [countySelVal, citySelValue, starsSelected, onFilterChange]);
 
   const [countriesArr, setCountriesArr] = useState<{ country: string }[]>([]);
   const [citiesArr, setCitiesArr] = useState<{ city: string }[]>([]);

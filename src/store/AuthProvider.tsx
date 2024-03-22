@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, ReactNode } from 'react';
 
 const AuthContext = createContext({
-  login: (email: string, userId: number) => {},
+  login: (_email: string, _userId: number) => {},
   logout: () => {},
   isUserLoggedIn: false,
   email: '',

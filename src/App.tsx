@@ -7,6 +7,7 @@ import TripsPage from './pages/trips/TripsPage';
 import SingleTripPage from './pages/trips/SingleTripPage';
 import { Toaster } from 'react-hot-toast';
 import AddTripPage from './pages/trips/AddTripPage';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import AuthPage from './pages/AuthPage';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
