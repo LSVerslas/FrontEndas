@@ -3,10 +3,11 @@
 import { createContext, useContext, useState, ReactNode } from 'react';
 
 const AuthContext = createContext({
-  login: (email: string) => {},
+  login: (email: string, userId: number) => {},
   logout: () => {},
   isUserLoggedIn: false,
   email: '',
+  userId: 0,
 });
 
 // const valueCtx = {
@@ -22,19 +23,28 @@ type AuthProviderProps = {
 
 // sukurti AuthProvider
 export default function AuthProvider({ children }: AuthProviderProps) {
-  const [email, setEmail] = useState('james@bond.com');
+  const emailFromLocalStore = localStorage.getItem('tripEmail');
+  const idFromLocalStore = localStorage.getItem('tripId');
+  const [email, setEmail] = useState(emailFromLocalStore || '');
+  const [userId, setUserId] = useState<number>(idFromLocalStore ? +idFromLocalStore : 0);
 
   // const isUserLoggedIn = !!email;
   const isUserLoggedIn = Boolean(email);
 
   console.log('email Provide ctx ===', email);
+  console.log('userId ===', userId);
 
-  function login(email: string) {
+  function login(email: string, id: number) {
     setEmail(email);
+    setUserId(id);
+    localStorage.setItem('tripEmail', email);
+    localStorage.setItem('tripId', id.toString());
   }
 
   function logout() {
     setEmail('');
+    localStorage.removeItem('tripEmail');
+    localStorage.removeItem('tripId');
   }
 
   const value = {
@@ -42,6 +52,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     logout: logout,
     isUserLoggedIn: isUserLoggedIn,
     email: email,
+    userId,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -7,6 +7,8 @@ import { beBaseUrl } from '../../config';
 import axios from 'axios';
 import { getNiceDate } from '../../utils/helpers';
 import toast from 'react-hot-toast';
+import SwiperTest from '../../components/UI/SwiperTest';
+import SinglePageSwiper from '../../components/UI/SinglePageSwiper';
 
 type tripParam = {
   readonly tripId: string;
@@ -28,7 +30,7 @@ export default function SingleTripPage() {
   async function getTrip(url: string) {
     try {
       const resp = await axios.get(url);
-      console.log('resp ===', resp);
+      console.log(resp.data);
       setCurrentTrip(resp.data);
     } catch (error) {
       console.warn('getTrip', error);
@@ -54,12 +56,15 @@ export default function SingleTripPage() {
 
   return (
     <div>
-      <div className='container'>
-        <div className='left'>
-          <img
-            className='img-fluid'
-            src={'/img/' + currentTrip?.image_main}
-            alt={currentTrip?.name}
+      <div className='container singleTripPage'>
+        <div className='left '>
+          <SinglePageSwiper
+            images={[
+              currentTrip?.image_main || '',
+              currentTrip?.images_1 || '',
+              currentTrip?.images_2 || '',
+              currentTrip?.images_3 || '',
+            ]}
           />
         </div>
         <div className='right'>
