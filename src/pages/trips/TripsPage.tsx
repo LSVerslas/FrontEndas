@@ -7,12 +7,13 @@ import { TripObjType } from '../../types/types';
 import toast from 'react-hot-toast';
 import TripCard from '../../components/trips/TripCard';
 import { TripsFilters } from '../../components/trips/TripsFilters';
+import TripsList from '../../components/trips/TripsList';
 
 export default function TripsPage() {
   const [tripsArr, setTripsArr] = useState<(TripObjType & { email: string })[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState<string>('');
-  console.log('tripsArr ===', tripsArr);
+  // console.log('tripsArr ===', tripsArr);
 
   const [filterVal, setFilterVal] = useState('');
   // '/filter?country=france'
@@ -59,13 +60,15 @@ export default function TripsPage() {
         <div className='tripsPageGrid'>
           <TripsFilters onFilterChange={setFilterVal} />
 
-          <ul className='unlisted tripsList'>
+          {/* TripsList */}
+          <TripsList list={tripsArr} />
+          {/* <ul className='unlisted tripsList'>
             {tripsArr?.map((tObj) => (
               <li className='mb-4' key={tObj.id}>
                 <TripCard item={tObj} />
               </li>
             ))}
-          </ul>
+          </ul> */}
         </div>
       </div>
     </div>

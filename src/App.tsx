@@ -14,6 +14,8 @@ import { useAuthCtx } from './store/AuthProvider';
 import UserPage from './pages/UserPage';
 import UserTrips from './pages/UserTrips';
 import CountriesPage from './pages/countries/CountriesPage';
+import SingleCountryPage from './pages/countries/SingleCountryPage';
+import TripsArchive from './pages/trips/TripsArchive';
 
 export default function App() {
   const { isUserLoggedIn } = useAuthCtx();
@@ -24,6 +26,7 @@ export default function App() {
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/countries' element={<CountriesPage />} />
+        <Route path='/countries/:countryId' element={<SingleCountryPage />} />
         {/* <Route path='/auth' element={<AuthPage />} /> */}
         <Route
           path='/auth/login'
@@ -43,6 +46,7 @@ export default function App() {
         />
         <Route path='/trips' element={<TripsPage />} />
         <Route path='/trips/add' element={<AddTripPage />} />
+        <Route path='/trips/archive' element={<TripsArchive />} />
         <Route path='/trips/:tripId' element={<SingleTripPage />} />
       </Routes>
     </div>

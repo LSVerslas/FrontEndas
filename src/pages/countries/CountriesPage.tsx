@@ -9,17 +9,18 @@ import { Link } from 'react-router-dom';
 export default function CountriesPage() {
   //
   const [countriesArr, setCountriesArr] = useState<CountryObjType[] | null>(null);
-  console.log('countriesArr ===', countriesArr);
   useEffect(() => {
     getCountries(countriesUrl);
   }, []);
+
+  console.log('countriesArr ===', countriesArr);
 
   function getCountries(url: string) {
     // axios - parsiusti countries ir atvaizduoti korteliu pavidalu
     axios
       .get(url)
       .then((resp: AxiosResponse) => {
-        console.log('resp.data ===', resp.data);
+        // console.log('resp.data ===', resp.data);
         setCountriesArr(resp.data);
       })
       .catch((error: AxiosError) => {
@@ -35,9 +36,9 @@ export default function CountriesPage() {
         <ul className='unlisted row'>
           {countriesArr?.map((cObj) => (
             <li className='col-12 col-md-6 col-xl-4' key={cObj.id}>
-              <Link to={'#'}>
+              <Link className='d-block' to={`/countries/${cObj.id}`}>
                 <img className='cImg' src={'/img/' + cObj.image_main} alt={cObj.name} />
-                <h3 className=''>{cObj.name}</h3>
+                <h3 className='cName'>{cObj.name}</h3>
               </Link>
             </li>
           ))}

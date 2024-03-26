@@ -104,6 +104,21 @@
   object-fit: cover;
 }
 
+.cName {
+  margin-top: -2em;
+  margin-bottom: 2em;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  padding-left: 1em;
+  z-index: 1;
+  position: relative;
+}
+.cSingleImage {
+  height: 400px;
+  width: 100%;
+  object-fit: cover;
+}
+
 /* bootrstrap md media */
 @media screen and (max-width: 992px) {
   .singleTripPage {
