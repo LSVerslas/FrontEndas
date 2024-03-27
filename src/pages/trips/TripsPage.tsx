@@ -5,21 +5,38 @@ import { useEffect, useState } from 'react';
 import { beBaseUrl } from '../../config';
 import { TripObjType } from '../../types/types';
 import toast from 'react-hot-toast';
-import TripCard from '../../components/trips/TripCard';
 import { TripsFilters } from '../../components/trips/TripsFilters';
 import TripsList from '../../components/trips/TripsList';
 
 export default function TripsPage() {
-  const [tripsArr, setTripsArr] = useState<(TripObjType & { email: string })[] | null>(null);
+  const [tripsArr, setTripsArr] = useState<(TripObjType & { email: string })[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState<string>('');
   // console.log('tripsArr ===', tripsArr);
 
+  const [sortOptVal, setSortOptVal] = useState('');
+
+  let sortedArr = tripsArr !== null ? [...tripsArr] : [];
+
+  switch (sortOptVal) {
+    case 'price-min-to-max':
+      console.log('price-min-to-max sort');
+      sortedArr.sort((a, b) => a.price - b.price);
+      break;
+    case 'country-a-z':
+      console.log('price-min-to-max sort');
+      sortedArr.sort((a, b) => a.country.localeCompare(b.country));
+      break;
+    default:
+      console.log('default sort');
+      sortedArr = tripsArr;
+      break;
+  }
+
+  // const sortedArr = tripsArr?.sort((a, b) => a.price - b.price);
+  // console.table(sortedArr, ['price', 'name', 'country']);
   const [filterVal, setFilterVal] = useState('');
-  // '/filter?country=france'
-  // '/filter?city=paris'
-  // '/filter?rating=3'
-  // '/filter?country=france&city=paris&rating=3'
+
   useEffect(() => {
     // toast.loading('Loading...');
     if (filterVal) {
@@ -61,7 +78,28 @@ export default function TripsPage() {
           <TripsFilters onFilterChange={setFilterVal} />
 
           {/* TripsList */}
-          <TripsList list={tripsArr} />
+          <div className=''>
+            <p>active sort: {sortOptVal}</p>
+            <select
+              value={sortOptVal}
+              onChange={(e) => setSortOptVal(e.target.value)}
+              className='form-select w-25'>
+              <option value={''}>Sort By</option>
+              <option value={'price-min-to-max'}>Price min to max</option>
+              <option value={'dalykas'}>Price max to min</option>
+              <option value={'country-a-z'}>Country a-z</option>
+              <option value={'dalykas'}>Country z-a</option>
+              <option value={'city-a-z'}>City a-z</option>
+              <option value={'dalykas'}>City z-a</option>
+              <option value={'stars-min-to-max'}>Stars min-max</option>
+              <option value={'dalykas'}>Stars max-min</option>
+              <option value={'email-a-z'}>Email a-z</option>
+              <option value={'dalykas'}>Email z-a</option>
+              <option value={'date-min-to-max'}>Date min-max</option>
+              <option value={'date-min-to-max'}>Date max-min</option>
+            </select>
+            <TripsList list={sortedArr} />
+          </div>
           {/* <ul className='unlisted tripsList'>
             {tripsArr?.map((tObj) => (
               <li className='mb-4' key={tObj.id}>
