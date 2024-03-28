@@ -7,6 +7,7 @@ import { useAuthCtx } from '../../store/AuthProvider';
 import { InputEl } from '../UI/InputEl';
 import { UserObjType } from '../../types/types';
 import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 type UpdateUserObjType = {
   name?: string;
@@ -23,7 +24,7 @@ type UpdateUserFormProps = {
 };
 
 export default function UpdateUserForm({ email, name, userId }: UpdateUserFormProps) {
-  console.log('UpdateUserForm userInfo ===', email, name);
+  // console.log('UpdateUserForm userInfo ===', email, name);
   const formik = useFormik<UpdateUserObjType>({
     initialValues: {
       name: name,
@@ -58,17 +59,27 @@ export default function UpdateUserForm({ email, name, userId }: UpdateUserFormPr
   }, [email, name]);
 
   function sendUpdateDataToBack(data: Omit<UpdateUserObjType, 'passwordConfirm'>) {
-    console.log('data sending ===', data);
     axios
       .put(`${beBaseUrl}/auth/user/update/${userId}`, data)
       .then((res: AxiosResponse<UserObjType>) => {
         console.log('res.data ===', res.data);
+        toast.success('user updated');
+
+        formik.resetForm();
       })
       .catch((err) => {
         console.warn('err sendUpdateDataToBack ===', err.response.data);
+        // pagauti klaida kurios kodas pass
+        if (err.response.data.code === 'pass') {
+          console.warn('bogas dabartinis pass');
+          formik.setFieldError('currentPassword', 'Check you password');
+        }
       });
   }
-
+  // const errObj = {
+  //   code: 45,
+  //   msg: 'wowo owo wo oww o',
+  // };
   return (
     <div>
       <div className='mt-5'>
